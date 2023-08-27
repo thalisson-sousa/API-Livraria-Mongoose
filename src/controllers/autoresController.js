@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const autores = require('../models/Autor.js');
 
 class autorController {
@@ -15,11 +16,19 @@ class autorController {
     static listarPorId = async (req, res) => {
         try {
             const id = req.params.id;
-
             const autor = await autores.findById(id).exec();
-            res.status(200).json(autor);
+
+            if(autor !== null) {
+                res.status(200).json(autor);
+            } else {
+                res.status(404).json({ message: 'Autor não encontrado'});
+            }
         } catch (error) {
-            res.status(400).json({ erro: 'Ocorreu um erro ao buscar os autores' + `${error}` });
+            if(error instanceof mongoose.Error.CastError) {
+                res.status(400).json({ erro: 'erro ao buscar o autor, favor verifique os dados informados'});
+            } else {
+                res.status(400).json({ erro: 'Ocorreu um erro ao buscar os autores' + `${error}` });
+            }
         }
     }
 
