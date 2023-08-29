@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./config/dbConnect.js');
-const routes = require('./routes/index.js')
+const routes = require('./routes/index.js');
+const manipuladorDeErros = require('./middlewares/manipuladorDeErros.js');
 
 db.on("erro", console.log.bind(console, 'Erro de conexâo!'))
 db.once("open", () => {
@@ -12,5 +13,7 @@ const app = express();
 app.use(express.json());
 
 routes(app);
+
+app.use(manipuladorDeErros);
 
 module.exports = app;
