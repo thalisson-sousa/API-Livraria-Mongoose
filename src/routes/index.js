@@ -1,19 +1,17 @@
-const express = require('express');
-const livros = require('./livrosRoutes');
-const autores = require('./autoresRoutes');
-const editoras = require('./editoraRoutes');
+import express from "express";
+import livros from "./livrosRoutes.js";
+import autores from "./autoresRoutes.js";
 
 const routes = (app) => {
-    app.route('/').get((req, res) => {
-        res.status(200).send("Curso Node")
-    })
+  app.route("/").get((req, res) => {
+    res.status(200).send({titulo: "Curso de node"});
+  });
 
-    app.use(
-        express.json(),
-        livros,
-        autores,
-        editoras,
-    )
-}
+  app.use(
+    express.json(),
+    livros,
+    autores
+  );
+};
 
-module.exports = routes;
+export default routes;

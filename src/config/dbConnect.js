@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 mongoose.connect(process.env.STRING_CONEXAO_DB);
 
-const db = mongoose.connection;
+let db = mongoose.connection;
 
-module.exports = db;
+export default db;
